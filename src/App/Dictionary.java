@@ -13,7 +13,7 @@ public class Dictionary {
                 int n;
                 String keyWord ;
                 boolean exit = false;
-                List<Node> nodesSearched = new ArrayList<>();
+                List<History> nodesSearched = new ArrayList<>();
                 List<Word> words = new ArrayList<>();
                 BSTree tree = new BSTree();
                 // Đọc dữ liệu ra từ file
@@ -44,6 +44,8 @@ public class Dictionary {
                             System.out.println("----Nhập từ cần tìm----");
                             keyWord = input.next();
                             Node nodeSearch = tree.search(keyWord);
+			    History item = new History(keyWord,nodeSearch);
+                            nodesSearched.add(item);
                             if(nodeSearch == null){
                                 // tìm những từ gần đúng
                                 words = tree.searchNearest(keyWord);
@@ -56,8 +58,6 @@ public class Dictionary {
                             }
                             else
                             {
-                            	// Lưu danh sách từ đã tra
-                                nodesSearched.add(nodeSearch);
                                 System.out.println("----Thông tin từ cần tìm----");
                                 nodeSearch.printData();
                             }
@@ -81,7 +81,9 @@ public class Dictionary {
                         case  8:
                             if(nodesSearched.size() > 0){
                                 System.out.println("----Danh sách từ đã tra----");
-                                System.out.println(nodesSearched);
+                                for(History his : nodesSearched) {
+                                	System.out.println(his.toString());
+                                }
                             }
                             else{
                                 System.out.println("Danh sách rỗng");
